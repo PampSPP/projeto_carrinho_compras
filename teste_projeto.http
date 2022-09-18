@@ -1,0 +1,198 @@
+### Criação de usuário
+POST http://localhost:8000/usuario HTTP/1.1
+content-type: application/json
+
+{
+    "id": 1,
+    "nome": "Usuario Teste",
+    "email": "teste@email.com",
+    "senha": "1234"
+}
+
+### Criação de um novo usuário
+POST http://localhost:8000/usuario HTTP/1.1
+content-type: application/json
+
+{
+    "id": 2,
+    "nome": "Usuario Teste Jr.",
+    "email": "teste.jr@email.com",
+    "senha": "1234"
+}
+
+### Falha: ID repetido
+POST http://localhost:8000/usuario HTTP/1.1
+content-type: application/json
+
+{
+    "id": 1,
+    "nome": "Usuário Teste",
+    "email": "teste@email.com",
+    "senha": "1234"
+}
+
+### Falha no endereço de e-mail
+POST http://localhost:8000/usuario HTTP/1.1
+content-type: application/json
+
+{
+    "id": 2,
+    "nome": "Outro Usuário Teste",
+    "email": "teste",
+    "senha": "1234"
+}
+
+### Falha na validação de senha
+POST http://localhost:8000/usuario HTTP/1.1
+content-type: application/json
+
+{
+    "id": 2,
+    "nome": "Mais Um Usuário Teste",
+    "email": "teste@email.com",
+    "senha": "12"
+}
+
+### Retorna usuário pelo id
+GET http://localhost:8000/usuario/1 HTTP/1.1
+Content-Type: application/json
+
+### Falha: id inexistente
+GET http://localhost:8000/usuario/10 HTTP/1.1
+Content-Type: application/json
+
+### Falha: id com tipo errado
+GET http://localhost:8000/usuario/nome HTTP/1.1
+Content-Type: application/json
+
+### Retorna usuário pelo nome
+GET http://localhost:8000/usuario/Usuario%20Teste HTTP/1.1
+Content-Type: application/json
+
+### Remove usuário pelo id
+DELETE http://localhost:8000/usuario/2 HTTP/1.1
+Content-Type: application/json
+
+### Falha: id inexistente
+DELETE http://localhost:8000/usuario/10 HTTP/1.1
+Content-Type: application/json
+
+### Criação de endereço - usuário não existe
+POST http://localhost:8000/usuario/10/endereco HTTP/1.1
+Content-Type: application/json
+
+{
+    "rua": "Rua",
+    "cep": "12345-000",
+    "cidade": "Sampa",
+    "estado": "SP"
+}
+
+### Criação de endereço
+POST http://localhost:8000/usuario/1/endereco HTTP/1.1
+Content-Type: application/json
+
+{
+    "rua": "Rua",
+    "cep": "12345-000",
+    "cidade": "Sampa",
+    "estado": "SP"
+}
+
+### Criação de novo endereço para o mesmo usuário
+POST http://localhost:8000/usuario/1/endereco HTTP/1.1
+Content-Type: application/json
+
+{
+    "rua": "Rua 2",
+    "cep": "12345-000",
+    "cidade": "Sampa",
+    "estado": "SP"
+}
+
+### Retorna os endereços associados ao usuário
+GET http://localhost:8000/usuario/1/endereco HTTP/1.1
+Content-Type: application/json
+
+### Falha: usuário não existe
+GET http://localhost:8000/usuario/10/endereco HTTP/1.1
+Content-Type: application/json
+
+### Remoção de endereço - usuário não existe
+DELETE http://localhost:8000/usuario/10/endereco/0 HTTP/1.1
+Content-Type: application/json
+
+### Remoção de endereço - não há endereços associados
+DELETE http://localhost:8000/usuario/1/endereco/0 HTTP/1.1
+Content-Type: application/json
+
+### Remoção de endereço - não há o endereço com o id fornecido
+DELETE http://localhost:8000/usuario/1/endereco/2 HTTP/1.1
+Content-Type: application/json
+
+### Remoção de endereço
+DELETE http://localhost:8000/usuario/1/endereco/1 HTTP/1.1
+Content-Type: application/json
+
+### E-mails de um domínio
+GET http://localhost:8000/usuario/email/email.com HTTP/1.1
+Content-Type: application/json
+
+### E-mail com domínio inexistente no banco
+GET http://localhost:8000/usuario/email/teste.com HTTP/1.1
+Content-Type: application/json
+
+### Criação um produto
+POST http://localhost:8000/produto HTTP/1.1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "nome": "iPhone",
+    "descricao": "Celular caro",
+    "preco": 8000
+
+}
+
+### Criação de outro produto
+POST http://localhost:8000/produto HTTP/1.1
+Content-Type: application/json
+
+{
+     "id": 5,
+    "nome": "Ventilador",
+    "descricao": "Ventilador forte",
+    "preco": 150  
+}
+
+### Deleta um produto
+DELETE http://localhost:8000/produto/5 HTTP/1.1
+Content-Type: application/json
+
+### Falha: Se o id do produto não existir
+DELETE http://localhost:8000/produto/10 HTTP/1.1
+Content-Type: application/json
+
+### Falha: Se não existir usuário ou produto
+POST http://localhost:8000/carrinho/1/2 HTTP/1.1
+Content-Type: application/json
+
+### Criar o carrinho, vincular ao usuário e adicionar o produto
+POST http://localhost:8000/carrinho/1/1 HTTP/1.1
+Content-Type: application/json
+
+### Retornar carrinho
+GET http://localhost:8000/carrinho/1 HTTP/1.1
+Content-Type: application/json
+
+### Retornar preço total e quantidade de produtos
+GET http://localhost:8000/carrinho/1/totais HTTP/1.1
+Content-Type: application/json
+
+### Deletar carrinho correspondente ao id do usuário
+DELETE http://localhost:8000/carrinho/1 HTTP/1.1
+Content-Type: application/json
+
+### Remoção de um item do carrinho
+DELETE http://localhost:8000/carrinho/1/1 HTTP/1.1
+Content-Type: application/json
